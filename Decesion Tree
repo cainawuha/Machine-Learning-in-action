@@ -1,41 +1,86 @@
-#决策树算法
-
 import math
-#小的数据集
+
+#create dataset
 def createDataSet():
     dataSet = [[1, 1, 'yes'],
                [1, 1, 'yes'],
                [1, 0, 'no'],
                [0, 1, 'no'],
                [0, 1, 'no']]
-    featureNames = ['no surfacing','flippers'] #不浮出水面是否存活 ，有无脚蹼
+    featureNames = ['no surfacing','flippers'] #
     #change to discrete values
     return dataSet, featureNames
 
-#计算信息熵,因为我们会利用最大信息增益的方法划分数据集-----看哪个特征划分使得，信息熵(数据无序度)减小的最多
+#calculayte entropy
 def Entropy(dataSet):
     num = len(dataSet)
     labelCounts = {}
-    for featVec in dataSet: # 统计每个类别的数量
-        currentLabel = featVec[-1] #最后1列为键
+    for featVec in dataSet: # number of categories
+        currentLabel = featVec[-1] # the last column is category
         if currentLabel not in labelCounts.keys(): 
-            labelCounts[currentLabel] = 0 #初始值=0
-        labelCounts[currentLabel] += 1 #统计+1
+            labelCounts[currentLabel] = 0 #initial value = 0
+        labelCounts[currentLabel] += 1 
     entropy = 0.0
-    for key in labelCounts:  #
+    for key in labelCounts:  
         prob = float(labelCounts[key])/num
         entropy -= prob * math.log(prob,2) #log base 2
     return entropy
-
-#测试一下
+#take a test
 myData,myFeatureNames = createDataSet()
 print "the old dataset:\n",myData
 
 myEntropy = Entropy(myData)
 print "my test entropy should be 0.97095 :\n",myEntropy
 
-#添加一类，mabey,yes,no   ====熵越高，表明数据越混乱
-myData[0][-1] = "mabey"
-print "the new dataset:\n",myData
-myEntropy = Entropy(myData)
-print "my test entropy should be 1.37095 :\n",myEntropy
+
+
+#split dataset
+def splitDataSet(dataSet, axis, value):
+    returnDataSet = []
+    for dataVec in dataSet:
+        if dataVec[axis] == value:
+            tempVec = dataVec[:axis]     #0--(axis-1)
+            tempVec.extend(dataVec[axis+1:]) #(axis+1)--(-1)
+            returnDataSet.append(tempVec) 
+    return returnDataSet
+#take a test
+myData,myFeatureNames = createDataSet()
+print splitDataSet(myData,0,1) #axis = 0,and value=1
+
+
+#ChooseBestFeature
+def chooseBestFeatureToSplit(dataSet):
+    numFeatures = len(dataSet[0]) - 1     
+    baseEntropy = Entropy(dataSet)         
+    bestInfoGain = 0.0; bestFeature = -1
+    
+    for i in range(numFeatures):        
+        featureList = [example[i] for example in dataSet]
+        uniqueVal = set(featureList)       #deduplication
+        newEntropy = 0.0
+        for value in uniqueVal:  
+            subDataSet = splitDataSet(dataSet, i, value)
+            prob = len(subDataSet)/float(len(dataSet))
+            newEntropy += prob * Entropy(subDataSet)    
+        infoGain = baseEntropy - newEntropy    
+        if (infoGain > bestInfoGain):       
+            bestInfoGain = infoGain         
+            bestFeature = i
+    return bestFeature                     
+
+
+#take a test
+index = chooseBestFeatureToSplit(myData)
+print "best feature shoule be 0\n",index
+
+
+# use pickle to save tree and data structure
+import pickle
+define storetree(inputtree,filename):
+       fw = open (filename,'w')
+       pickle.dump(inputtree,fw）
+       fw.close()
+       
+define gettree(filename):
+       fr = open(filename)
+       return pickle.load(fr)
