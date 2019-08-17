@@ -1,0 +1,5 @@
+                                 pros                                                                            cons
+KNN                    high accuracy, insensitive to outliers,no assumptions about data           computationally expensive, require a lot of memory
+decision trees         computationally cheap, easy for humans to understand learned results,      prone to overfitting
+                        can deal with irrelevant features   
+naive Bayes            works with small amount of data, handles multiple classes                  sensitive tp how input data is prepared          
