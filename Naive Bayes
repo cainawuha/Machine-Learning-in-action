@@ -7,3 +7,51 @@ def loadDataSet():
                  ['quit', 'buying', 'worthless', 'dog', 'food', 'stupid']]
     classVec = [0,1,0,1,0,1]    #1 is abusive, 0 not
     return postingList,classVec
+
+def CreateVocabularyList(dataset):
+    vocabularySet = set([])
+    for document in dataset:
+        vocabularySet = vocabularySet | set(document)
+    return list(vocabularySet)
+
+def setOfWordsVec(vocabularyList, inputSet):
+    returnVec = [0]*len(vocabularyList)
+    for word in inputSet:
+        if word in vocabularyList:
+            returnVec[vocabularyList.index(word)] = 1
+        else:
+            print "the word: %s is not in my Vocabulary!" % word
+    return returnVec
+    
+    trainVec = []
+    for post in postingList:
+    trainVec.append(setOfWordsVec(vocabularyList,post))
+
+
+def NaiveBayes0(trainMatrix,trainCategory):
+    p0Num = np.ones(numWords); p1Num = np.ones(numWords)
+    p0Denom = 0.0; p1Denom = 0.0
+    p1 = sum(trainCategory) / float(len(trainMatrix))
+    p0 = 1-p1
+    for i in range(len(trainMatrix)):
+        if trainCategory[i] == 1:
+            p1Num += trainMatrix[i] 
+            p1Denom += sum(trainMatrix[i]
+        else:
+            p0Num += trainMatrix[i] 
+            p0Denom += sum(trainMatrix[i]) 
+    p1Vect = p1Num/float(p1Denom)     #p(w/y=1)   
+    p0Vect = p0Num/float(p0Denom)     #p(w/y=0)  
+    return p0Vect,p1Vect,p1
+    
+   
+
+def classify(testVec, p0Vec, p1Vec, pClass1):
+    p1 = sum(testVec * p1Vec) + np.log(pClass1)    #p(y=1/w) = p(w/y=1) * p(y=1)
+    p0 = sum(testVec * p0Vec) + np.log(1.0 - pClass1) #p(y=0) = 1 - p(y=1)
+    if p1 > p0: 
+        return 1
+    else: 
+        return 0
+
+
