@@ -36,8 +36,7 @@ X = train_data['Var_X'].values.reshape(-1, 1)
 y = train_data['Var_Y'].values
 
 # Create polynomial features
-# TODO: Create a PolynomialFeatures object, then fit and transform the
-# predictor feature
+# TODO: Create a PolynomialFeatures object, then fit and transform the predictor feature
 poly_feat = PolynomialFeatures(degree = 4)  # x^0,x^1,x^2,x^3,x^4
 X_poly = poly_feat.fit_transform(X)  #  the "fit" side of the method considers how many features are needed in the output, 
                                         and the "transform" side applies those considerations to the data provided to the method 
@@ -45,6 +44,5 @@ X_poly = poly_feat.fit_transform(X)  #  the "fit" side of the method considers h
                                         Assign the new feature matrix to the X_poly variable.
                                         
 # Make and fit the polynomial regression model
-# TODO: Create a LinearRegression object and fit it to the polynomial predictor
-# features
+# TODO: Create a LinearRegression object and fit it to the polynomial predictor features
 poly_model = LinearRegression(fit_intercept = False).fit(X_poly, y)
