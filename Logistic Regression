@@ -1,0 +1,48 @@
+import numpy as np
+
+# Load data from file
+def load_data(filename):
+    dataset = []
+    label = []
+    file = open(filename)
+    for line in file.readlines():
+        lineaa =line.strip().split('\t')
+        dataset.append(lineaa[0:2])
+        label.append(lineaa[-1])
+    return np.array(dataset,dtype=np.float64), np.array(label,dtype=np.int).reshape(-1,1)
+    
+ # batch gradient decent to get best weights
+ def sigmoid(x):
+     return 1.o / (1+np.exp(-x))
+     
+ # use all datasets to update weights everytime  
+ def bgd(x,y,learn_rate = 0.001, iters=1000):
+     m,n = x.shape
+     weight = np.zeros((n,1))
+     weights = np.zeros((iters,n))
+     for i in xrange(iters):
+         out = sigmoid(X.dot(weight))
+         error = y - out
+         dw = X.T.dot(error)
+         weight += -learning rate * dw
+         weights[i,:] = weight.ravel().T 
+      return weight,weights
+      
+ # use stochastic gradient ascent instead of useing all datasat everytime
+ def sgd(x,y,learn_rate = 0.01,iters = 200):
+    m,n = x.shape
+    weight = np.zeros((n,1))
+    weight0 = []
+    weight1 = []
+    weight2 = []
+    for i in xrange(iters):
+        for j in xrange(m): # randomly choose one data from datasets to train weight
+            out = sigmoid(x[j,:].reshape(1,-1).dot(weight))
+            error = y[j,:].reshape(1,-1) - out
+            dw = -x[j,:].reshape(1,-1).T.dot(error)
+            weight += -learn_rate*dw
+            weight0.append(weight[0,0])
+            weight1.append(weight[1,0])
+            weight2.append(weight[2,0])
+    return weight,weight0,weight1,weight2
+ 
