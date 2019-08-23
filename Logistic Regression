@@ -32,17 +32,13 @@ def load_data(filename):
  def sgd(x,y,learn_rate = 0.01,iters = 200):
     m,n = x.shape
     weight = np.zeros((n,1))
-    weight0 = []
-    weight1 = []
-    weight2 = []
+    weights = np.zeros((iters,n))
     for i in xrange(iters):
         for j in xrange(m): # randomly choose one data from datasets to train weight
             out = sigmoid(x[j,:].reshape(1,-1).dot(weight))
             error = y[j,:].reshape(1,-1) - out
             dw = -x[j,:].reshape(1,-1).T.dot(error)
             weight += -learn_rate*dw
-            weight0.append(weight[0,0])
-            weight1.append(weight[1,0])
-            weight2.append(weight[2,0])
-    return weight,weight0,weight1,weight2
+            weights[i,:] = weight.ravel().T 
+    return weight,weights
  
