@@ -5,3 +5,5 @@ decision trees         computationally cheap, easy for humans to understand lear
 naive Bayes            works with small amount of data, handles multiple classes                    sensitive tp how input data is prepared          
 logistic regression    Computationally inexpensive, easy to implement, knowledge representation     Prone to underfitting, may have low accuracy
                        easy to interpret
+SVM                    low generalization error, computationally inexpensive,                       sensitive to tuning parameters and kernel choice,
+                       easy to interpret results                                                    only handle binary classification
