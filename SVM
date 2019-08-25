@@ -34,3 +34,4 @@ low dimentional function(non linear function): g(x) = sum(αi yi K<xi,x>) +b  (K
 = high dimentional function(linear function) : f(x') = sum(αi yi <xi',x'>) +b 
 input low dimential w & x into kernel function K<w,x>, get high dimentional <w',x'> 
 transfer low dimentional data to high dimential ,then take back to object function
+
