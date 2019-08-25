@@ -27,3 +27,10 @@ be changed when some points changed label.
 so 
 w=α1y1x1 + α2y2x2+…+ αnynxn , most α is 0, as they don't take decisive effect on w,
 only these data point with non-zero αn make w fixed. these data points called support vector
+
+# kernel function
+object function:
+low dimentional function(non linear function): g(x) = sum(αi yi K<xi,x>) +b  (K is kernel function)
+= high dimentional function(linear function) : f(x') = sum(αi yi <xi',x'>) +b 
+input low dimential w & x into kernel function K<w,x>, get high dimentional <w',x'> 
+transfer low dimentional data to high dimential ,then take back to object function
