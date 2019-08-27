@@ -36,3 +36,18 @@ input low dimential w & x into kernel function K<w,x>, get high dimentional <w',
 transfer low dimentional data to high dimential ,then take back to object function
 
 # W = sum(ai yi xi ),once we have set of a, we can easily compute weights w and then get hyperplane
+
+
+
+
+# define loaddata function:
+def loadDataSet(fileName):
+    fr = open(fileName)
+    dataMat = [];
+    labelMat = []
+    for line in fr.readlines():
+        lineArr = line.strip().split('\t')
+        dataMat.append([lineArr[0], lineArr[1]])
+        labelMat.append([lineArr[2]])
+    return dataMat,labelMat
+    
